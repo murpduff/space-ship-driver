@@ -1,0 +1,40 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2DArray<float4> Result; //Result[uint3(x, y, face)]
+int _Resolution;
+
+float _Frequency;
+float _Amplitude;
+int _Octaves;
+int _Seed;
+
+#include "noiseTerrain.hlsl"
+
+//Convert UV + face into direction
+float3 GetDirection(uint3 id){
+    float2 uv = (float2(id.xy) / (float)_Resolution) * 2.0 - 1.0;
+    float3 dir = float3(0,0,0); 
+
+    if(id.z == 0) dir = float3( 1.0, -uv.y, -uv.x); // +X
+    if(id.z == 1) dir = float3(-1.0, -uv.y,  uv.x); // -X
+    if(id.z == 2) dir = float3( uv.x,  1.0,  uv.y); // +Y
+    if(id.z == 3) dir = float3( uv.x, -1.0, -uv.y); // -Y
+    if(id.z == 4) dir = float3( uv.x, -uv.y,  1.0); // +Z
+    if(id.z == 5) dir = float3(-uv.x, -uv.y, -1.0); // -Z
+
+    return normalize(dir);
+} 
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID){
+    if(id.x >= (uint)_Resolution || id.y >= (uint)_Resolution) return;
+
+    float3 p = GetDirection(id);
+
+    float4 noiseValue = GetColor(p, _Seed);
+
+    Result[id] = float4(noiseValue.x, noiseValue.y, noiseValue.z, 1.0);
+}

@@ -1,0 +1,52 @@
+# Default: normalize text line endings
+* text=auto
+
+# ---- Unity YAML: use Unity's Smart Merge ----
+*.unity          merge=unityyamlmerge eol=lf
+*.prefab         merge=unityyamlmerge eol=lf
+*.asset          merge=unityyamlmerge eol=lf
+*.mat            merge=unityyamlmerge eol=lf
+*.anim           merge=unityyamlmerge eol=lf
+*.controller     merge=unityyamlmerge eol=lf
+*.overrideController merge=unityyamlmerge eol=lf
+*.physicMaterial merge=unityyamlmerge eol=lf
+*.rendertexture  merge=unityyamlmerge eol=lf
+*.mask           merge=unityyamlmerge eol=lf
+*.meta           eol=lf
+*.cs             text diff=csharp
+
+# ---- Large generated asset: texture arrays (binary data in YAML, 10-20 MB) ----
+Assets/Textures/TerrainTex/TextureArrays/*.asset filter=lfs diff=lfs merge=lfs -text
+
+# ---- Binaries via Git LFS ----
+# Images
+*.png  filter=lfs diff=lfs merge=lfs -text
+*.jpg  filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.psd  filter=lfs diff=lfs merge=lfs -text
+*.tga  filter=lfs diff=lfs merge=lfs -text
+*.tif  filter=lfs diff=lfs merge=lfs -text
+*.tiff filter=lfs diff=lfs merge=lfs -text
+*.exr  filter=lfs diff=lfs merge=lfs -text
+*.hdr  filter=lfs diff=lfs merge=lfs -text
+*.gif  filter=lfs diff=lfs merge=lfs -text
+# 3D
+*.fbx  filter=lfs diff=lfs merge=lfs -text
+*.obj  filter=lfs diff=lfs merge=lfs -text
+*.blend filter=lfs diff=lfs merge=lfs -text
+*.dae  filter=lfs diff=lfs merge=lfs -text
+# Audio / video
+*.wav  filter=lfs diff=lfs merge=lfs -text
+*.mp3  filter=lfs diff=lfs merge=lfs -text
+*.ogg  filter=lfs diff=lfs merge=lfs -text
+*.aif  filter=lfs diff=lfs merge=lfs -text
+*.mp4  filter=lfs diff=lfs merge=lfs -text
+*.mov  filter=lfs diff=lfs merge=lfs -text
+# Fonts
+*.ttf  filter=lfs diff=lfs merge=lfs -text
+*.otf  filter=lfs diff=lfs merge=lfs -text
+# Other binaries
+*.dll  filter=lfs diff=lfs merge=lfs -text
+*.so   filter=lfs diff=lfs merge=lfs -text
+*.a    filter=lfs diff=lfs merge=lfs -text
+*.zip  filter=lfs diff=lfs merge=lfs -text
